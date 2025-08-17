@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -35,16 +36,11 @@ public class Main {
         String livro = input.nextLine();
 
 
-        try {
-            String livroCodificado = URLEncoder.encode(livro, "UTF-8");
+        String livroCodificado = URLEncoder.encode(livro, StandardCharsets.UTF_8);
 
-            var pesquisa = consumo.obterDados(url + livroCodificado);
-            ResultadoDTO dados = conversor.obterDados(pesquisa, ResultadoDTO.class);
-            return dados;
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
+        var pesquisa = consumo.obterDados(url + livroCodificado);
+        ResultadoDTO dados = conversor.obterDados(pesquisa, ResultadoDTO.class);
+        return dados;
     }
 
     public void exibeMenu(){
